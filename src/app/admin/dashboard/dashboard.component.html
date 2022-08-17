@@ -1,1 +1,109 @@
-<p>dashboard works!</p>
+<div class="container py-5">
+
+  <!-- Template form -->
+  <!--  <div class="row">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+          <div class="bg-white shadow rounded p-4">
+            <h1 class="display-6 text-dark">
+              Créer une annonce</h1>
+            <hr class="bg-dark mb-5">
+            <form #offerForm="ngForm" (ngSubmit)="onSubmitOfferForm(offerForm)">
+              <div class="form-group mb-3">
+                <label for="offerTitleInput">Titre</label>
+                <input name="title" type="text" id="offerTitleInput" class="form-control" required ngModel />
+              </div>
+              <div class="form-group mb-3">
+                <label for="offerBrandInput">Marque</label>
+                <input name="brand" type="text" id="offerBrandInput" class="form-control" required ngModel />
+              </div>
+              <div class="form-group mb-3">
+                <label for="offerModelInput">Modèle</label>
+                <input name="model" type="text" id="offerModelInput" class="form-control" required ngModel />
+              </div>
+              <div class="form-group mb-3">
+                <label for="offerdescriptionInput">Description</label>
+                <textarea name="description" id="offerdescriptionInput" class="w-100 form-control" rows="5" required
+                  ngModel></textarea>
+              </div>
+              <div class="form-group mb-3">
+                <label for="offerPriceInput">Prix</label>
+                <input name="price" type="number" id="offerPriceInput" class="form-control" required ngModel />
+              </div>
+              <div class="d-flex">
+                <button class="btn btn-success mx-auto" type="submit">Enregistrer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> -->
+
+  <!-- reactive form -->
+  <div class="row mb-5">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+      <div class="bg-white shadow rounded p-4">
+        <h2 class="display-6 text-dark">
+          Créer une annonce</h2>
+        <hr class="bg-dark mb-5">
+        <form [formGroup]="offerForm" (ngSubmit)="onSubmitOfferForm()">
+          <input type="number" formControlName="index" hidden>
+          <div class="form-group mb-3">
+            <label for="offerTitleInput">Titre</label>
+            <input formControlName="title" type="text" id="offerTitleInput" class="form-control" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="offerBrandInput">Marque</label>
+            <input formControlName="brand" type="text" id="offerBrandInput" class="form-control" appUppercaseInput />
+          </div>
+          <div class="form-group mb-3">
+            <label for="offerModelInput">Modèle</label>
+            <input formControlName="model" type="text" id="offerModelInput" class="form-control" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="offerdescriptionInput">Description</label>
+            <textarea formControlName="description" id="offerdescriptionInput" class="w-100 form-control"
+              rows="5"></textarea>
+          </div>
+          <div class="form-group mb-3">
+            <label for="offerPriceInput">Prix</label>
+            <input formControlName="price" type="number" id="offerPriceInput" class="form-control" />
+          </div>
+          <div class="d-flex">
+            <button class="btn btn-success mx-auto" type="submit" [disabled]="offerForm.invalid">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="offers.length >0" class="row">
+    <div class="col-12 col-lg-8  mx-auto">
+      <div class="bg-white shadow rounded p-4">
+        <h2 class="display-6 text-dark">Annonces enregistrées</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titre</th>
+              <th scope="col">Voiture</th>
+              <th scope="col">Prix</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let offer,  of offers; let index = index">
+              <th>{{ index + 1 }}</th>
+              <td>{{ offer.title | firstCharUpperCase }}</td>
+              <td>{{ offer.brand + " - " + offer.model}}</td>
+              <td>{{ offer.price | currency:"EUR":"symbol":"1.2-2":"fr"}}</td>
+              <td>
+                <button class="btn btn-primary" type="button" (click)="onEditOffer(offer, index)">Modifier</button>
+                <button class="btn btn-danger ms-3" type="button" (click)="onDeleteOffer(index)">delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
